@@ -21,6 +21,10 @@
 
 ## Usually absent
 
-`jq` `rg` `fd` `nkf` `sqlite3` CLI `pandoc` `ffmpeg` `tesseract` `qpdf`
+`jq` `rg` `fd` `nkf` `sqlite3` CLI `pandoc` `ffmpeg` `tesseract` `qpdf` `convert` / ImageMagick
 
-Use `command -v` before assuming availability. Install only through [caps/bootstrap.md](./caps/bootstrap.md).
+## Notes (re-measured 2026-08-12)
+
+- After profile `media`, ImageMagick is typically **v6**: command is `convert`. `magick` (v7) is often **absent** — check `command -v` before using either name.
+- After profile `ocr`, Tesseract languages include at least `eng` and `jpn`.
+- Use `command -v` before assuming availability. Install only through [caps/bootstrap.md](./caps/bootstrap.md).

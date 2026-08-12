@@ -14,4 +14,9 @@ Profile: `ocr`. Follow [bootstrap](./bootstrap.md).
 tesseract page.png stdout -l jpn+eng
 ```
 
-For PDF pages, render pages first when needed. Do not dump all OCR output into context.
+## Input quality
+
+- Prefer a real scan or a high-contrast render: roughly **300 DPI** (or a large on-screen bitmap). Tiny default fonts and low-resolution screenshots often yield garbage even when Tesseract is installed correctly.
+- For PDF: try [pdf-extract](./pdf-extract.md) first. Only OCR when there is no usable text layer; render the needed pages (e.g. pdftoppm / pymupdf) before `tesseract`.
+- Japanese + English: `-l jpn+eng` after the `ocr` profile (packages `tesseract-ocr`, `tesseract-ocr-jpn`).
+- Do not dump all OCR output into context; keep short excerpts.

@@ -17,3 +17,5 @@
 | 2026-08-12 | v3: progressive disclosure with INDEX and caps |
 | 2026-08-12 | v3.1: bootstrap and legacy cleanup |
 | 2026-08-12 | v3.2: compressed always-on and INDEX; bootstrap contract moved to `caps/bootstrap.md`; profiles removed as duplicate metadata |
+| 2026-08-12 | fix jp-law-egov CLI (lawId regex, Article split, revisions/keyword) |
+| 2026-08-12 | docs: ocr input quality, media convert vs magick, estat minimal curl, ENV re-measure notes |
