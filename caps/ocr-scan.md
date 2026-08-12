@@ -1,17 +1,12 @@
 # ocr-scan
 
-**What:** スキャン PDF / 画像を tesseract で OCR。  
-**When:** テキスト層が無く、pymupdf 等で文字が取れないとき。  
-**Not when:** テキスト PDF。重いので明示時のみ。
+**What:** OCR a scanned image or PDF page with Tesseract.  
+**When:** no usable text layer exists.  
+**Not when:** text can already be extracted with pymupdf / pdfplumber.
 
 ## Setup
 
-```bash
-P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
-curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
-bash /tmp/bootstrap.sh ocr
-source /workspace/.tools/env
-```
+Profile: `ocr`. Follow [bootstrap](./bootstrap.md).
 
 ## Use
 
@@ -19,9 +14,4 @@ source /workspace/.tools/env
 tesseract page.png stdout -l jpn+eng
 ```
 
-PDF はページ画像化が先（pdftoppm 等が docs-extra / poppler 経由で使える場合あり）。
-
-## Hard no
-
-- 全ページ OCR 結果をプロンプトに貼らない
-- テキスト層がある文書に使わない
+For PDF pages, render pages first when needed. Do not dump all OCR output into context.

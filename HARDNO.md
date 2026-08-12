@@ -1,28 +1,13 @@
-# Hard no（横断）
+# Hard no
 
-能力固有の禁止は各 `caps/*.md` にも書く。ここは横断だけ。
+Cross-cutting guardrails. Capability-specific limits belong in the selected cap.
 
-## 原則
-
-1. **`sudo` 禁止**（root 直で apt / バイナリ配置）
-2. **セッション開始フル bootstrap 禁止**（使う profile だけ・使う直前）
-3. **手組み apt 禁止** — install は `bin/bootstrap.sh` のみ
-4. **playbook を retrieve しない** — shell の `curl`
-5. **API キーはチャットでユーザーが渡したときだけ**
-6. **巨大 XML/HTML/ログを回答に貼らない** — `/workspace` に置いてスライス
-7. **無いコマンドをあると言うな** — `command -v` または bootstrap
-8. **MCP を pm2/tmux 常駐させて host tool が増えたように振る舞わない**
-9. **多数 JSON を `find … -exec jq` で回さない** — Python 一括
-10. **INDEX に無い能力を常設化しない**
-
-## よくある失敗
-
-| 失敗 | 代わり |
-|---|---|
-| `sudo apt-get install jq` | `bash bootstrap.sh cli-min` |
-| apt update なし install → 404 | bootstrap（内部で update 1 回） |
-| 毎ターン INDEX も cap も取り直し | `/workspace` に残っていれば再利用 |
-| 小 CSV に duckdb | pandas |
-| テキスト PDF に tesseract | pymupdf / pdfplumber |
-| 綺麗な 1 本 PDF を pandoc | host `pdf` スキル |
-| GitHub 上のコードを rg | host `github_search` |
+- Do not use `sudo`; this environment is normally root.
+- Do not full-bootstrap at session start; install the selected profile only when needed.
+- Do not hand-write `apt-get install`; use `caps/bootstrap.md` and `bin/bootstrap.sh`.
+- Do not use API keys, tokens, or credentials unless supplied in this chat.
+- Do not retrieve this playbook with a page-retrieval tool; use `curl`.
+- Do not paste secrets or huge XML / HTML / logs into the answer; save and slice locally.
+- Do not claim a command exists without `command -v` or bootstrap confirmation.
+- Do not make background MCP processes appear as new host tools.
+- Do not run one jq process per file for bulk JSON; use Python batch processing.

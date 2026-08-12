@@ -1,16 +1,12 @@
 # data-sql
 
-**What:** 中〜大 CSV / 複数ファイルを DuckDB（Python API）で SQL 集計する。  
-**When:** 行数が多く pandas が重い、SQL 的 JOIN/GROUP BY が自然なとき。  
-**Not when:** 小さい CSV の describe → pandas。対話 UI の表 → host 文書 skills。
+**What:** Run SQL-style aggregation or joins over medium/large CSVs with DuckDB's Python API.  
+**When:** pandas is awkward or slow for joins, grouping, or multiple files.  
+**Not when:** small CSV inspection (`pandas`) or a presentation table (host document tools).
 
 ## Setup
 
-```bash
-P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
-curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
-bash /tmp/bootstrap.sh data
-```
+Profile: `data`. Follow [bootstrap](./bootstrap.md).
 
 ## Use
 
@@ -25,9 +21,4 @@ print(duckdb.sql("""
 """).fetchdf())
 ```
 
-CLI バイナリを無理に PATH に出さなくてよい。Python API を使う。
-
-## Hard no
-
-- 全 CSV をプロンプトに貼らない。集計結果の要約だけ返す
-- 小データで duckdb を儀式的に使わない
+Use the Python API; do not add a large DuckDB CLI. Return summarized results, not full source files.

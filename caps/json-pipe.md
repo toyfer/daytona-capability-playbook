@@ -1,17 +1,12 @@
 # json-pipe
 
-**What:** 単発 JSON ストリームを `jq` で切る。  
-**When:** API 1 レスポンス・1 ファイルの整形・フィールド抽出。  
-**Not when:** 数百ファイルの集計 → Python 一括（`json` モジュール）。小細工なら `python3 -m json.tool` で足りる。
+**What:** Extract or reshape a single JSON response/file with `jq`.  
+**When:** one API response or one local JSON file needs fields selected.  
+**Not when:** bulk JSON aggregation (use Python), or basic pretty-printing (`python3 -m json.tool`).
 
 ## Setup
 
-```bash
-P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
-curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
-bash /tmp/bootstrap.sh cli-min
-source /workspace/.tools/env
-```
+Profile: `cli-min`. Follow [bootstrap](./bootstrap.md).
 
 ## Use
 
@@ -24,9 +19,7 @@ jq -r '.laws[].law_info.law_id' /tmp/laws.json
 
 ```bash
 python3 -m json.tool < file.json | head
-python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.keys())'
+python3 -c 'import json,sys; print(json.load(sys.stdin).keys())'
 ```
 
-## Hard no
-
-- `find … -exec jq` やファイル毎 jq プロセス大量起動をしない
+Do not spawn one jq process per file.

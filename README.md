@@ -1,81 +1,40 @@
 # Daytona Capability Playbook
 
-Scira + Daytona 向けの**追加能力カタログ**（progressive disclosure）。
+Scira + Daytona 用の追加能力カタログ。agent は **INDEX → 必要な cap → 必要なら script** の順で読む。
 
-- Scira のカスタム指示（always-on）は薄い入口だけ
-- 詳細・注意・スクリプトは**このリポジトリだけ**
-- エージェントは **INDEX → 必要な path だけ curl** で load
-- playbook の取得は shell の `curl`（`retrieve` 禁止・コスト高）
+- **always-on:** [`CUSTOM_INSTRUCTIONS.md`](./CUSTOM_INSTRUCTIONS.md)
+- **catalog:** [`INDEX.md`](./INDEX.md)
+- **capability guides:** [`caps/`](./caps/)
+- **implementation:** [`bin/`](./bin/)
 
-**Raw base:**  
-`https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main`
+Raw base: `https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main`
 
-**Repo:** https://github.com/toyfer/daytona-capability-playbook
-
-## エージェント向け（最短）
+## Agent flow
 
 ```bash
 P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
 curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
-# INDEX の description が今のタスクに当たる path だけ:
-curl -fsSL "$P/<path>" -o /tmp/cap.md   # or .sh / .py
+# Read only the cap selected from INDEX.
 ```
 
-Host tool（検索・bash・code_interpreter・文書 skills 等）が既定。  
-playbook 能力は host より精度・一次ソース・トークン・速度で勝つときだけ使う。
+Host tools are the default. Load a capability only when it materially improves accuracy, primary-source access, speed, or token efficiency.
 
-## ツリー
+## Repository roles
 
-```
-.
-├── INDEX.md                 # 最初に読むカタログ（what + when + path）
-├── CUSTOM_INSTRUCTIONS.md   # Scira に貼る always-on 完成形
-├── README.md
-├── ENV.md                   # 環境インベントリ
-├── HARDNO.md                # 横断の禁止
-├── OPS.md                   # 運用・変更履歴
-├── bin/
-│   ├── bootstrap.sh         # install 唯一入口（static-first jq/rg）
-│   ├── with-tools.sh
-│   └── egov.py              # optional: 法令 API CLI
-├── caps/                    # 能力ごとの使い方・注意
-└── profiles/                # bootstrap profile の論理名一覧
-```
-
-| パス | 役割 |
+| path | role |
 |---|---|
-| [INDEX.md](./INDEX.md) | 能力カタログ |
-| [CUSTOM_INSTRUCTIONS.md](./CUSTOM_INSTRUCTIONS.md) | always-on 完成形 |
-| [ENV.md](./ENV.md) | 何が最初からあるか |
-| [HARDNO.md](./HARDNO.md) | 横断 Hard no |
-| [OPS.md](./OPS.md) | 変更履歴 |
-| [caps/](./caps/) | 各能力の how-to |
-| [bin/bootstrap.sh](./bin/bootstrap.sh) | install |
-| [bin/egov.py](./bin/egov.py) | 法令 CLI（optional） |
+| `CUSTOM_INSTRUCTIONS.md` | Thin global entrypoint; no router or recipes |
+| `INDEX.md` | Thin capability catalog: what / when / path / profile |
+| `caps/bootstrap.md` | Install contract and profile definitions |
+| `caps/*.md` | Task-specific procedure, boundary, and failure prevention |
+| `bin/*` | Executable implementation |
+| `ENV.md` | Environment snapshot only |
+| `HARDNO.md` | Cross-cutting guardrails |
+| `OPS.md` | Maintenance rules and history |
 
-## 設計
+## Rules for maintainers
 
-1. **Progressive disclosure** — always-on に router / レシピを二重に書かない
-2. **Host 既定** — 迷ったら host
-3. **Install は bootstrap のみ** — `sudo` 禁止（root 直）。cli-min は static-first
-4. **ドメイン非依存のコア** — 法令・e-Stat 等は optional。タスクが求めない限り load しない
-5. **セッション揮発** — `/workspace` と追加 bin はチャット内のみ
-
-## install profiles
-
-```bash
-P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
-curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
-bash /tmp/bootstrap.sh cli-min    # jq + rg
-# bash /tmp/bootstrap.sh data     # duckdb + sqlite3
-source /workspace/.tools/env
-```
-
-| profile | 主な用途 |
-|---|---|
-| cli-min | jq, rg |
-| cli-dev | + fd, unzip, file |
-| jp-text | nkf |
-| data | duckdb (py), sqlite3 |
-| docs-extra | pandoc 等 |
-| ocr / media | 明示時のみ（重い） |
+- Do not duplicate a recipe across custom instructions, INDEX, and caps.
+- Keep `INDEX.md` as a table of contents, not a router manual.
+- Add a capability only with a clear `what`, `when`, `not when`, and an executable or deterministic procedure when appropriate.
+- Domain-specific capabilities remain optional unless the task explicitly requests that domain.

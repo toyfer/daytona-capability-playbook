@@ -1,17 +1,12 @@
 # docs-convert
 
-**What:** pandoc 等で md の一括変換（html/docx など）。  
-**When:** 多数ファイルの機械的変換。  
-**Not when:** 体裁の良い 1 本の PDF/docx/pptx → host の `pdf` / `docx` / `pptx` スキル。
+**What:** Mechanically convert batches of Markdown to HTML or DOCX with Pandoc.  
+**When:** many files need a repeatable conversion.  
+**Not when:** creating one polished PDF/DOCX/PPTX (use the host document skill).
 
 ## Setup
 
-```bash
-P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
-curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
-bash /tmp/bootstrap.sh docs-extra
-source /workspace/.tools/env
-```
+Profile: `docs-extra`. Follow [bootstrap](./bootstrap.md).
 
 ## Use
 
@@ -20,7 +15,4 @@ pandoc input.md -o output.html
 pandoc input.md -o output.docx
 ```
 
-## Hard no
-
-- pandoc で PDF（pdflatex 不在で落ちやすい）。PDF は host `pdf`
-- フル TeX Live を入れない（ディスク破壊的）
+Do not use Pandoc PDF by default: a TeX engine is absent. Do not install full TeX Live.

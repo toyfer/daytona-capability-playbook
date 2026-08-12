@@ -1,18 +1,19 @@
 # 運用
 
-## ルール
+## Rules
 
-- 環境の有無は `command -v` または bootstrap 出力で確認（記憶で断言しない）
-- 同じ失敗が 2 回起きたら、該当 `caps/*.md` か `HARDNO.md` に **1 行だけ**足す。足す前に削れないか見る
-- always-on（`CUSTOM_INSTRUCTIONS.md`）に router 表やレシピを戻さない
-- INDEX の description は **what + when** を一行。手順は caps へ
-- バージョンピン（jq/rg URL）を上げたら ENV の実測日を更新
-- 旧ファイル名（router.md / tools.md 等）を復活させない
+- Keep `CUSTOM_INSTRUCTIONS.md` global and small; no recipes or router tables.
+- Keep `INDEX.md` to what / when / path / profile only.
+- Keep detailed procedures and boundaries in one selected cap.
+- Update `ENV.md` only after re-measuring the sandbox.
+- If a failure repeats twice, add one targeted line to the owning cap or `HARDNO.md`; remove before adding where possible.
+- Update pinned tool URLs in `bin/bootstrap.sh` deliberately and record the date below.
 
-## 変更履歴
+## History
 
-| 日付 | 内容 |
+| date | change |
 |---|---|
-| 2026-08-12 | v1: e-Gov 実測、router/tools/hard-no 分離 |
-| 2026-08-12 | v3: progressive disclosure（INDEX + caps）、CUSTOM_INSTRUCTIONS 同梱 |
-| 2026-08-12 | **v3.1**: `bin/bootstrap.sh` / profiles 追加、旧散在 md を削除して tree を一本化 |
+| 2026-08-12 | v1: initial router / tools / e-Gov notes |
+| 2026-08-12 | v3: progressive disclosure with INDEX and caps |
+| 2026-08-12 | v3.1: bootstrap and legacy cleanup |
+| 2026-08-12 | v3.2: compressed always-on and INDEX; bootstrap contract moved to `caps/bootstrap.md`; profiles removed as duplicate metadata |
