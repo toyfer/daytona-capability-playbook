@@ -1,7 +1,7 @@
 # Capability Index
 
 追加能力の目次。ここには **what / when / path / profile** だけを置く。  
-host で足りるなら何も load しない。詳細・手順・注意は該当 path へ。
+host / skills で足りるなら何も load しない。詳細・手順・注意は該当 path へ。
 
 | id | use when | path | profile |
 |---|---|---|---|
@@ -20,12 +20,15 @@ host で足りるなら何も load しない。詳細・手順・注意は該当
 
 | id | use when | path | profile |
 |---|---|---|---|
-| jp-law-egov | 日本法令の一次条文・法令番号が必要 | caps/jp-law-egov.md | — |
+| jp-law-egov | 日本法令の一次条文・法令番号が必要（web_search より先） | caps/jp-law-egov.md | — |
 | estat-series | user-provided appId で e-Stat series が必要 | caps/estat-series.md | — |
 
 ## Routing note
 
-- 行が無い → **即 host / 接続済み MCP**（一般 web 調査・製品比較はここに入る）。
-- cap は sandbox 拡張と特定 public API のみ。ドメイン知識の置き場ではない。
+- 行が無い → **即 host / skills / 接続済み MCP**。一般 web 調査・製品比較はここに入る。
+- cap は sandbox 拡張と、host が包んでいない public API だけ。ドメイン知識の置き場ではない。
+- 用途が重なるとき: INDEX の use when が一次ソース・決定的手続き・明確な速度勝ちを書いていれば cap。それ以外は host。
+- 例: 日本の条文・法令番号 → `jp-law-egov`（web_search より先）。法令の解説・ニュース・判例 → host。
+- 例: 体裁の良い 1 文書を「作る」 → host の docx/pdf/xlsx/pptx。既存 PDF から抜く → `pdf-extract`。
 
 補助は必要な時だけ `ENV.md` / `HARDNO.md`。
