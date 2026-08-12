@@ -1,6 +1,6 @@
 # 環境インベントリ
 
-> 実測: 2026-08-12。環境が変わった時だけ更新する。
+> 実測: 2026-08-12（product-compare セッション後の pipeline smoke）。環境が変わった時だけ更新する。
 
 | 項目 | 値 |
 |---|---|
@@ -13,18 +13,20 @@
 
 ## Initial CLI
 
-`bash` `curl` `git` `python3` `pip3` `uv` `node` `npm` `npx` `perl` `java` `tar` `gzip` `xz` `openssl` `iconv` GNU coreutils
+`bash` `curl` `git` `python3` `pip3` `uv` `node` `npm` `npx` `perl` `java` `tar` `gzip` `xz` `openssl` `iconv` `sqlite3` GNU coreutils
 
 ## Initial Python
 
-`pymupdf` `pdfplumber` `pdfminer` `pypdfium2` `tabula` `bs4` `lxml` `httpx` `requests` `pandas` `numpy` `scipy` `sklearn` `matplotlib` `seaborn` `plotly` `yfinance`
+`pymupdf` (`fitz`) `pdfplumber` `pdfminer` `pypdfium2` `tabula` `bs4` `lxml` `httpx` `requests` `pandas` `numpy` `scipy` `sklearn` `matplotlib` `seaborn` `plotly` `yfinance` `duckdb`
 
-## Usually absent
+## Usually absent (need bootstrap profile)
 
-`jq` `rg` `fd` `nkf` `sqlite3` CLI `pandoc` `ffmpeg` `tesseract` `qpdf` `convert` / ImageMagick
+`jq` `rg` `fd` `nkf` `pandoc` `pdftotext` / poppler `qpdf` `tesseract` `ffmpeg` `convert` (ImageMagick v6; `magick` often absent)
 
 ## Notes (re-measured 2026-08-12)
 
-- After profile `media`, ImageMagick is typically **v6**: command is `convert`. `magick` (v7) is often **absent** — check `command -v` before using either name.
+- `sqlite3` CLI and Python `duckdb` are **present** without bootstrap; profile `data` is often a no-op but still safe.
+- After profile `media`, ImageMagick is typically **v6**: command is `convert`. `magick` (v7) is often **absent**.
 - After profile `ocr`, Tesseract languages include at least `eng` and `jpn`.
-- Use `command -v` before assuming availability. Install only through [caps/bootstrap.md](./caps/bootstrap.md).
+- Static installs land in `/workspace/.tools/bin` (`jq`, `rg`, `fd`); apt packages use system PATH.
+- Use `command -v` (or a Python import check) before installing. Install only through [caps/bootstrap.md](./caps/bootstrap.md).

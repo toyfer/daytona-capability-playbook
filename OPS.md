@@ -8,6 +8,7 @@
 - Update `ENV.md` only after re-measuring the sandbox.
 - If a failure repeats twice, add one targeted line to the owning cap or `HARDNO.md`; remove before adding where possible.
 - Update pinned tool URLs in `bin/bootstrap.sh` deliberately and record the date below.
+- Keep `id` and `caps/<id>.md` aligned when practical; stubs may redirect renames.
 
 ## History
 
@@ -22,4 +23,5 @@
 | 2026-08-12 | v3.3: add discovery trigger to always-on |
 | 2026-08-12 | v3.4: rewrite always-on in English with explicit priority stack, minimal rules, and concrete triggers |
 | 2026-08-12 | v3.5: enforce mandatory INDEX.md fetch at session start (never skip capability discovery) |
-| 2026-08-12 | fix: INDEX routing note + CUSTOM load step for host-first on miss; HARDNO bulk HTML/JSON slice recipe (product-compare session friction) |
+| 2026-08-12 | fix: INDEX routing note + CUSTOM load step for host-first on miss; HARDNO bulk HTML/JSON slice recipe |
+| 2026-08-12 | smoke: curl INDEX/caps/bin; bootstrap all profiles; egov/keyless live; ENV drift (sqlite3+duckdb present); CUSTOM bootstrap curl; keyless id/path align |
