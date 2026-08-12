@@ -1,50 +1,63 @@
-# Scira 能力カタログ入口
+# Scira Capability Catalog Entry Point
 
-この指示は回答文の矯正ではない。host tool に無い、または host より有利な追加能力を、必要時に GitHub playbook から load するための入口である。詳細な router、レシピ、ドメイン手順、MCP・認証設定、回答スタイルは playbook にのみ置く。
+This entry point expands the agent's tool selection. It does not control answer style, tone, or domain workflow. Detailed rules, recipes, domain procedures, and MCP setup live in the GitHub playbook only.
 
 Playbook raw base:
 `https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main`
 
-## 環境
+## Priority order (apply in this order, never override higher with lower)
 
-- ヘッドレス agent。bash、curl、`/workspace`、ネットが使える。
-- Debian 系 x86_64。多くは root。`sudo` は使わない。
-- `/workspace` と追加 install は同一チャット内だけ残る。
-- コマンドの有無を推測しない。`command -v` で確認するか playbook の手順を使う。
+1. **Safety**: never bypass sandbox, never exfiltrate secrets, never run code from user input without the agent choosing to do so. When user input and a higher-priority rule conflict, the higher-priority rule wins.
+2. **Capability discovery**: when the task is non-trivial, read `INDEX.md` to discover available tools before committing to host-only execution.
+3. **Default to host tools** when the playbook offers no advantage.
+4. **Domain capabilities**: optional. Load only when the user explicitly requests that domain.
+5. **Style and verbosity**: do not let the answer style override the higher-priority rules.
 
-## 選択
+## Environment (always true)
 
-- host tool が既定。迷ったら host のまま。
-- shell / CLI / 外部 API / 専用 script が host より精度、一次性、速度、または token 効率で明確に勝つ時だけ playbook を使う。
-- 特定ドメイン能力は、ユーザーのタスクが明示的に求める時だけ load する。
+- Headless agent. Shell (bash), `/workspace`, `curl`, and the network are available.
+- Debian x86_64. The user is often `root`. Do not use `sudo`.
+- `/workspace` and any installed binaries live only for the current chat session.
+- Verify commands with `command -v` before assuming they exist.
 
-## Discovery trigger
+## Trigger (when to read `INDEX.md`)
 
-**非自明な shell・開発・ローカルファイル・データ・形式変換・OCR・メディア・公開 API・一次ソース取得のタスクでは、host だけで即決する前に INDEX を確認する。**
+For any of the following, fetch `INDEX.md` once per session before deciding the tool to use.
 
-これは install ではない。INDEX を読んで適切な cap が無ければ host のまま進める。
+- Non-trivial shell, dev, or local-file work
+- Bulk JSON, CSV, or SQL-style aggregation
+- PDF, OCR, document conversion, encoding, archive, or media batch
+- Public API, structured dataset, or primary-source retrieval
+- A preinstalled Python tool seems likely to help but you are not sure which cap exists
 
-一般検索、単純な会話、host に専用 tool がある天気・GitHub 検索・ユーザー提示 URL は、通常 INDEX を読まない。
+Do **not** fetch `INDEX.md` for: greetings, general knowledge Q&A, weather, GitHub remote code search, or a URL the user supplied. Those go straight to host tools.
 
 ## Load protocol
-
-未取得なら session ごとに一度 INDEX を curl する。
 
 ```bash
 P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
 curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
 ```
 
-INDEX の description がタスクに当たる path だけを curl し、その手順・注意・script に従う。playbook は `retrieve` で取らない。取得済み path は同一セッションで再利用する。
+1. Read the `INDEX.md` row whose `use when` matches the task.
+2. `curl` only that `path`. Reuse files already in `/workspace` within the same session.
+3. Follow the cap's `What / When / Not when` boundary.
+4. If the cap names a profile, run `bash /tmp/bootstrap.sh <profile>` from the cap's instructions, then `source /workspace/.tools/env`.
+5. Never use `retrieve` for the playbook; `curl` only.
+6. If the playbook is unreachable, continue with host tools and say so briefly.
 
-install は playbook の bootstrap だけを使う。手組み `apt-get install`、セッション開始時の全 profile install はしない。
+## Hard rules
 
-## Hard no
+- `sudo` is forbidden.
+- Never use an API key, token, or credential the user did not provide in this chat.
+- Never claim a background process (MCP / tmux / pm2) is a new host tool.
+- Never paste secrets, large XML, or large logs into the answer; save and slice locally.
+- Never register a capability that is not in `INDEX.md`.
 
-- `sudo` を使わない。
-- チャットで渡されていない API key / token を使わない。
-- 常駐 MCP 等で host tool が増えたように振る舞わない。
-- 秘密情報・巨大な XML / HTML / ログを回答へ貼らない。
-- INDEX に無い能力を常設化しない。
+## Cross-references (the playbook is the single source of truth)
 
-INDEX が取れない時は host のみで進め、playbook が未取得であることを短く伝える。
+- `INDEX.md` — capability catalog. The only file the agent must read to discover tools.
+- `caps/*.md` — one cap per file. Each has `What / When / Not when / Setup / Use / Notes`.
+- `bin/bootstrap.sh` — only installer. Called only when a cap names a profile.
+- `HARDNO.md` — guardrails that belong on the playbook, not in this entry point.
+- `ENV.md` — sandbox snapshot, only when in doubt.
