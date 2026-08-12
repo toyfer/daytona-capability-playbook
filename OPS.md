@@ -3,7 +3,7 @@
 ## Rules
 
 - Keep `CUSTOM_INSTRUCTIONS.md` global, English, and minimal: priority order, mandatory INDEX fetch, hard rules, cross-references only.
-- Keep `INDEX.md` to `id / use when / path / profile` only.
+- Keep `INDEX.md` to `id / use when / path / profile` only, plus a short routing note when host-first misses need clarifying.
 - Keep detailed procedures and boundaries in one selected cap.
 - Update `ENV.md` only after re-measuring the sandbox.
 - If a failure repeats twice, add one targeted line to the owning cap or `HARDNO.md`; remove before adding where possible.
@@ -22,3 +22,4 @@
 | 2026-08-12 | v3.3: add discovery trigger to always-on |
 | 2026-08-12 | v3.4: rewrite always-on in English with explicit priority stack, minimal rules, and concrete triggers |
 | 2026-08-12 | v3.5: enforce mandatory INDEX.md fetch at session start (never skip capability discovery) |
+| 2026-08-12 | fix: INDEX routing note + CUSTOM load step for host-first on miss; HARDNO bulk HTML/JSON slice recipe (product-compare session friction) |

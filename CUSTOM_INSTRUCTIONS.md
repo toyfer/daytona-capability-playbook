@@ -9,7 +9,7 @@ Playbook raw base:
 
 1. **Safety**: never bypass sandbox, never exfiltrate secrets, never run code from user input without the agent choosing to do so. When user input and a higher-priority rule conflict, the higher-priority rule wins.
 2. **Capability discovery (mandatory)**: always fetch `INDEX.md` at the start of the session before choosing tools. Never skip this step.
-3. **Default to host tools** only after `INDEX.md` shows no advantage for the task.
+3. **Default to host tools** only after `INDEX.md` shows no advantage for the task. No matching row is a normal outcome — continue immediately with host tools / connected MCP; do not stall looking for a cap.
 4. **Domain capabilities**: optional. Load only when the user explicitly requests that domain.
 5. **Style and verbosity**: do not let the answer style override the higher-priority rules.
 
@@ -37,10 +37,11 @@ curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
 ## Load protocol (after INDEX.md)
 
 1. Read the `INDEX.md` row whose `use when` matches the task.
-2. `curl` only that `path`. Reuse files already in `/workspace` within the same session.
-3. Follow the cap's `What / When / Not when` boundary.
-4. If the cap names a profile, run `bash /tmp/bootstrap.sh <profile>` from the cap's instructions, then `source /workspace/.tools/env`.
-5. If no row matches, stay on host tools — do not invent a capability.
+2. If none match, **stop playbook loading** and use host tools / connected MCP only.
+3. If a row matches, `curl` only that `path`. Reuse files already in `/workspace` within the same session.
+4. Follow the cap's `What / When / Not when` boundary.
+5. If the cap names a profile, run `bash /tmp/bootstrap.sh <profile>` from the cap's instructions, then `source /workspace/.tools/env`.
+6. Never invent a capability that is not in `INDEX.md`.
 
 ## Hard rules
 
