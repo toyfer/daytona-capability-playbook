@@ -18,9 +18,17 @@ Playbook raw base:
 - shell / CLI / 外部 API / 専用 script が host より精度、一次性、速度、または token 効率で明確に勝つ時だけ playbook を使う。
 - 特定ドメイン能力は、ユーザーのタスクが明示的に求める時だけ load する。
 
+## Discovery trigger
+
+**非自明な shell・開発・ローカルファイル・データ・形式変換・OCR・メディア・公開 API・一次ソース取得のタスクでは、host だけで即決する前に INDEX を確認する。**
+
+これは install ではない。INDEX を読んで適切な cap が無ければ host のまま進める。
+
+一般検索、単純な会話、host に専用 tool がある天気・GitHub 検索・ユーザー提示 URL は、通常 INDEX を読まない。
+
 ## Load protocol
 
-追加能力を使う前に、未取得なら INDEX を curl する。
+未取得なら session ごとに一度 INDEX を curl する。
 
 ```bash
 P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
