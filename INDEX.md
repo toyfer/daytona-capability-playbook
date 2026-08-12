@@ -14,7 +14,7 @@ host で足りるなら何も load しない。詳細・手順・注意は該当
 | docs-convert | 多数 Markdown の機械的変換 | caps/docs-convert.md | docs-extra |
 | ocr-scan | text layer のない scan / image OCR | caps/ocr-scan.md | ocr |
 | media-ffmpeg | 明示された media batch conversion | caps/media-ffmpeg.md | media |
-| keyless-open-data | host に専用 tool がない keyless public API | caps/keyless-geo-open-data.md | — |
+| keyless-open-data | host に専用 tool がない keyless public API | caps/keyless-open-data.md | — |
 
 ## Optional
 
@@ -25,8 +25,7 @@ host で足りるなら何も load しない。詳細・手順・注意は該当
 
 ## Routing note
 
-- どの `use when` にも当たらない → **即 host tools / 接続済み MCP**。cap を探して止まらない。
-- 一般の web 調査・製品比較・ニュース・ライブラリ docs は INDEX 外が正常（Firecrawl / GitHub / Context7 等）。
-- cap は sandbox 拡張（install・ローカル変換・特定 public API）専用。ドメイン知識のレシピ置き場ではない。
+- 行が無い → **即 host / 接続済み MCP**（一般 web 調査・製品比較はここに入る）。
+- cap は sandbox 拡張と特定 public API のみ。ドメイン知識の置き場ではない。
 
-補助情報が必要な時だけ `ENV.md` / `HARDNO.md` を読む。
+補助は必要な時だけ `ENV.md` / `HARDNO.md`。

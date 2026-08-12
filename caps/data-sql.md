@@ -6,7 +6,15 @@
 
 ## Setup
 
-Profile: `data`. Follow [bootstrap](./bootstrap.md).
+Profile: `data`. Follow [bootstrap](./bootstrap.md) only if needed:
+
+```bash
+python3 -c 'import duckdb' 2>/dev/null || bash /tmp/bootstrap.sh data
+command -v sqlite3 >/dev/null || bash /tmp/bootstrap.sh data
+# ensure bootstrap.sh exists first — see caps/bootstrap.md
+```
+
+On current sandboxes, `import duckdb` and `sqlite3` are often already available (see `ENV.md`).
 
 ## Use
 

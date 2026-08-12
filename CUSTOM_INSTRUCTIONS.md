@@ -38,9 +38,16 @@ curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
 
 1. Read the `INDEX.md` row whose `use when` matches the task.
 2. If none match, **stop playbook loading** and use host tools / connected MCP only.
-3. If a row matches, `curl` only that `path`. Reuse files already in `/workspace` within the same session.
+3. If a row matches, `curl` that `path`. If the cap points at `bootstrap` or another cap, `curl` those paths too. Reuse files already in `/workspace` within the same session.
 4. Follow the cap's `What / When / Not when` boundary.
-5. If the cap names a profile, run `bash /tmp/bootstrap.sh <profile>` from the cap's instructions, then `source /workspace/.tools/env`.
+5. If the cap names a profile and `command -v` (or a Python import) shows the tool is missing, install via bootstrap:
+   ```bash
+   P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
+   curl -fsSL "$P/bin/bootstrap.sh" -o /tmp/bootstrap.sh
+   bash /tmp/bootstrap.sh <profile>
+   source /workspace/.tools/env
+   ```
+   Do not assume `/tmp/bootstrap.sh` already exists. Skip bootstrap when the tool is already present.
 6. Never invent a capability that is not in `INDEX.md`.
 
 ## Hard rules
@@ -56,6 +63,6 @@ curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
 
 - `INDEX.md` — capability catalog. The only file the agent must read to discover tools.
 - `caps/*.md` — one cap per file. Each has `What / When / Not when / Setup / Use / Notes`.
-- `bin/bootstrap.sh` — only installer. Called only when a cap names a profile.
+- `bin/bootstrap.sh` — only installer. Called only when a cap names a profile and the tool is missing.
 - `HARDNO.md` — guardrails that belong on the playbook, not in this entry point.
 - `ENV.md` — sandbox snapshot, only when in doubt.

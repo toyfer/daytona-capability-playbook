@@ -1,8 +1,8 @@
 # bootstrap
 
 **What:** session-local install entrypoint for optional CLI / Python tools.  
-**When:** a selected cap names a profile and `command -v` confirms the required command is absent.  
-**Not when:** session start, host tools suffice, or a cap needs no profile.
+**When:** a selected cap names a profile and `command -v` / import confirms the required tool is absent.  
+**Not when:** session start, host tools suffice, the tool is already present, or a cap needs no profile.
 
 ## Use
 
@@ -27,8 +27,9 @@ Multiple profiles are allowed: `bash /tmp/bootstrap.sh cli-min data`.
 
 ## Contract
 
-- Installs live under `/workspace/.tools`; they are session-local.
-- jq / rg use pinned static releases; apt-backed profiles run `apt-get update` once per session.
+- Installs live under `/workspace/.tools` (static binaries) or system PATH (apt); session-local for `.tools`.
+- jq / rg / fd use pinned static releases when not on PATH; apt-backed profiles run `apt-get update` once per session.
 - The marker makes repeated profile installs no-op.
 - `sudo` and hand-written `apt-get install` commands are not used.
+- Check presence before install: many sandboxes already have `sqlite3` and Python `duckdb` (see `ENV.md`).
 - If setup fails, use the fallback stated by the selected cap or return to host tools.
