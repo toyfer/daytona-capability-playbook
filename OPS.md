@@ -7,10 +7,12 @@
 - always-on（`CUSTOM_INSTRUCTIONS.md`）に router 表やレシピを戻さない
 - INDEX の description は **what + when** を一行。手順は caps へ
 - バージョンピン（jq/rg URL）を上げたら ENV の実測日を更新
+- 旧ファイル名（router.md / tools.md 等）を復活させない
 
 ## 変更履歴
 
 | 日付 | 内容 |
 |---|---|
 | 2026-08-12 | v1: e-Gov 実測、router/tools/hard-no 分離 |
-| 2026-08-12 | **v3 フルスクラッチ**: progressive disclosure（INDEX + caps）、bootstrap static-first、ドメイン非依存コア、旧散在 md 廃止、CUSTOM_INSTRUCTIONS をリポジトリ同梱 |
+| 2026-08-12 | v3: progressive disclosure（INDEX + caps）、CUSTOM_INSTRUCTIONS 同梱 |
+| 2026-08-12 | **v3.1**: `bin/bootstrap.sh` / profiles 追加、旧散在 md を削除して tree を一本化 |
