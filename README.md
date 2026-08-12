@@ -1,23 +1,50 @@
 # Daytona Capability Playbook
 
-Scira + Daytona ヘッドレス環境の**能力ルーティング詳細版**。
+Scira + Daytona 向けの**追加能力カタログ**。
 
-カスタム指示（always-on）は薄く、**「host tool 以外を選ぶべき状況と代替」だけ**を載せる。詳細はこのリポジトリを必要時に curl で読む（retrieve は使わない・コスト高い）。
+- Scira のカスタム指示（always-on）は薄い入口だけを持つ
+- 詳細・ルーティング・注意・スクリプトは**このリポジトリだけ**に置く
+- エージェントは skill と同じく **INDEX → 必要な path だけ curl** で load する
+- `retrieve` でここを取らない（コスト高）。shell の `curl` を使う
 
-## ファイル構成
+**Raw base:**
+`https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main`
 
-| ファイル | 内容 | 読み方 |
-|---|---|---|
-| `router.md` | **ルーター**（host tool 以外を選ぶ状況 → 代替） | `curl -sS .../router.md` |
-| `hard-no.md` | **ツール別 Hard no** | `curl -sS .../hard-no.md` |
-| `ops.md` | **運用メモ**（変更履歴・方針） | `curl -sS .../ops.md` |
-| `tools.md` | 追加ツールセット・キーレス API・ベンチ・除外理由 | `curl -sS .../tools.md` |
-| `bin/egov.py` | e-Gov 法令 CLI（検証済み） | `curl -sS .../bin/egov.py -o /tmp/egov.py && python3 /tmp/egov.py search '地方自治法'` |
-| `daytona-capability-playbook.md` | 旧詳細版（コマンドレシピ・インベントリ・職域 Appendix） | `curl -sS .../daytona-capability-playbook.md` |
-| `egov-cli.md` | e-Gov 専用手順（旧・詳細） | `curl -sS .../egov-cli.md` |
+## エージェント向け（最短）
 
-## 使い方
+```bash
+P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
+curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
+# INDEX の description が今のタスクに当たる path だけ:
+curl -fsSL "$P/<path>" -o /tmp/cap.md   # or .sh / .py
+```
 
-カスタム指示 §2 のルーターで代替を選んだら、該当ファイルを `curl` で読んで実行する。
+Host tool（検索・bash・code_interpreter・文書 skills 等）が既定。
+playbook 能力は host より精度・一次ソース・トークン・速度で勝つときだけ使う。
 
-> 検証日: 2026-08-12。e-Gov API はシェルから到達確認済み（lawrevisions のみ 404）。
+## 人間向けマップ
+
+| パス | 役割 |
+|---|---|
+| [`INDEX.md`](./INDEX.md) | 能力カタログ（id / what+when / path / profile） |
+| [`ENV.md`](./ENV.md) | 環境インベントリ（実測） |
+| [`HARDNO.md`](./HARDNO.md) | 横断の禁止事項 |
+| [`OPS.md`](./OPS.md) | 変更履歴・運用 |
+| [`CUSTOM_INSTRUCTIONS.md`](./CUSTOM_INSTRUCTIONS.md) | Scira に貼る always-on 完成形 |
+| [`caps/`](./caps/) | 能力ごとの使い方・注意 |
+| [`bin/bootstrap.sh`](./bin/bootstrap.sh) | install の唯一入口 |
+| [`bin/egov.py`](./bin/egov.py) | 法令 API CLI（optional cap） |
+| [`profiles/`](./profiles/) | bootstrap profile の論理ツール一覧 |
+
+## 設計（短く）
+
+1. **Progressive disclosure** — always-on に router 表やレシピを二重に書かない
+2. **Host 既定** — 迷ったら host
+3. **Install は bootstrap のみ** — `sudo` 禁止（root 直）。cli-min は static-first
+4. **ドメイン非依存のコア** — 法令などは optional cap。タスクが求めない限り load しない
+5. **セッション揮発** — `/workspace` と追加 bin はチャット内のみ。必要なら都度 curl / bootstrap
+
+## 旧ファイル
+
+`router.md` / `tools.md` / `hard-no.md` / `ops.md` / `egov-cli.md` / `daytona-capability-playbook.md` は v3 で廃止。
+内容は `INDEX.md` + `caps/*` + `ENV.md` + `HARDNO.md` + `OPS.md` に吸収済み。
