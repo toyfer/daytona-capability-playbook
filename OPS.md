@@ -2,7 +2,7 @@
 
 ## Rules
 
-- Keep `CUSTOM_INSTRUCTIONS.md` global, English, and minimal: priority order, trigger, hard rules, cross-references only.
+- Keep `CUSTOM_INSTRUCTIONS.md` global, English, and minimal: priority order, mandatory INDEX fetch, hard rules, cross-references only.
 - Keep `INDEX.md` to `id / use when / path / profile` only.
 - Keep detailed procedures and boundaries in one selected cap.
 - Update `ENV.md` only after re-measuring the sandbox.
@@ -21,3 +21,4 @@
 | 2026-08-12 | docs: ocr input quality, media convert vs magick, estat minimal curl, ENV re-measure notes |
 | 2026-08-12 | v3.3: add discovery trigger to always-on |
 | 2026-08-12 | v3.4: rewrite always-on in English with explicit priority stack, minimal rules, and concrete triggers |
+| 2026-08-12 | v3.5: enforce mandatory INDEX.md fetch at session start (never skip capability discovery) |
