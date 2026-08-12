@@ -1,23 +1,16 @@
-# workspace-search
+# workspace-search — INDEXから削除（host/初期shellで代替）
 
-**What:** Search text or symbols across a local workspace with `rg`.  
-**When:** a multi-file local grep is needed.  
-**Not when:** remote GitHub code (`github_search`), a tiny file (`grep` may suffice), or semantic search.
+**Status:** INDEXから外した。初期shellに `grep -R -n` があり、bench 2026-08-12 で 300file 9kヒット `rg 0.009s` vs `grep 0.006s` と互角。わざわざ `rg` を入れる勝ち筋が無い。
 
-## Setup
-
-Profile: `cli-min`. Follow [bootstrap](./bootstrap.md).
-
-## Use
+使うなら直接このファイルを読む:
 
 ```bash
 rg -n 'pattern' /workspace
 rg -n -C 3 'pattern' /workspace/src
-rg -n --type py 'def foo' /workspace
+```
+代替（初期shellで可）:
+```bash
+grep -R -n 'pattern' /workspace --include='*.py' | head -n 200
 ```
 
-## Notes
-
-- Search an explicit local path.
-- Narrow the path or pipe to `head` when output is large.
-- Do not scan secrets or binaries indiscriminately.
+`caps/bootstrap.md` profile `cli-min` は他で使わないため、必要な時だけ手動で `bash /tmp/bootstrap.sh cli-min`。
