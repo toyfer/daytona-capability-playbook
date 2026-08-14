@@ -5,6 +5,7 @@
 - Keep `CUSTOM_INSTRUCTIONS.md` global, English, and minimal: hierarchy, when to open INDEX, hard rules, pointers only. No skill routing, no style, no recipes.
 - Keep `INDEX.md` to `id / use when / path / profile` only, plus a short routing note for host-first misses and host/cap overlap.
 - Keep detailed procedures and boundaries in one selected cap.
+- Do not snapshot host skill internals in CUSTOM or INDEX `use when`. If a host skill grows to cover a cap, re-measure (`bench/report.md`) and remove the INDEX row; do not patch CUSTOM with the new host fact.
 - Update `ENV.md` only after re-measuring the sandbox.
 - If a failure repeats twice, add one targeted line to the owning cap or `HARDNO.md`; do not grow custom instructions. Remove before adding where possible.
 - Update pinned tool URLs in `bin/bootstrap.sh` deliberately and record the date below.
@@ -27,3 +28,4 @@
 | 2026-08-12 | fix: INDEX routing note + CUSTOM load step for host-first on miss; HARDNO bulk HTML/JSON slice recipe |
 | 2026-08-12 | smoke: curl INDEX/caps/bin; bootstrap all profiles; egov/keyless live; ENV drift (sqlite3+duckdb present); CUSTOM bootstrap curl; keyless id/path align |
 | 2026-08-12 | v3.6: CUSTOM is a host/skills-first gate (no mandatory INDEX); overlap routing in INDEX; README/OPS aligned; deploy CUSTOM to Scira in the same cycle |
+| 2026-08-14 | v3.7: live host skill table first; stop snapshotting host internals (pdf-is-create-only, host-has-no-ocr); residual use when; namespace line for caps vs skills vs delegates vs MCP |

@@ -8,6 +8,8 @@
 
 Profile: `docs-extra`. Follow [bootstrap](./bootstrap.md).
 
+Do not trust a host skill that claims `pandoc` is preinstalled. Check `command -v pandoc` first; install only via this profile if missing.
+
 ## Use
 
 ```bash

@@ -11,7 +11,7 @@ Raw base: `https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/
 
 ## Agent flow
 
-Host tools and skills are the default. Open INDEX only when a listed cap is needed — sandbox CLI, a primary public API the host does not wrap, or a clear win on accuracy / primary source / speed / tokens.
+Host tools and skills are the default. Match the **live** host skill table first. Open INDEX only when the table is silent, a loaded skill cannot finish, or a listed cap has a measured residual win — sandbox CLI, a primary public API the host does not wrap, or accuracy / primary source / speed / tokens.
 
 ```bash
 P=https://raw.githubusercontent.com/toyfer/daytona-capability-playbook/main
@@ -21,6 +21,7 @@ curl -fsSL "$P/INDEX.md" -o /workspace/.playbook-index.md
 
 A miss is normal: stay on host tools. Do not load a cap just in case.
 Overlap routing lives in INDEX `use when` and the routing note, not in custom instructions.
+Do not snapshot host skill internals in CUSTOM or INDEX; they rot when the host changes.
 
 ## Repository roles
 
@@ -41,4 +42,5 @@ Overlap routing lives in INDEX `use when` and the routing note, not in custom in
 - Keep `INDEX.md` as a table of contents, not a router manual. Short overlap examples may live in the routing note.
 - Add a capability only with a clear `what`, `when`, `not when`, and an executable or deterministic procedure when appropriate.
 - Domain-specific capabilities remain optional unless the task explicitly requests that domain, or INDEX already states a clear primary-source win.
+- Do not snapshot host capabilities ("host `pdf` is create-only") in CUSTOM or INDEX. Point at the live description, a failed binary/import, or a measured residual. If a host skill grows to cover a cap, re-measure and drop the INDEX row.
 - Deploy `CUSTOM_INSTRUCTIONS.md` to Scira custom instructions in the same commit cycle; record the date in `OPS.md`.

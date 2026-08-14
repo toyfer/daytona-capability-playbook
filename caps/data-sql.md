@@ -2,7 +2,7 @@
 
 **What:** Run SQL-style aggregation or joins over medium/large CSVs with DuckDB's Python API.  
 **When:** pandas is awkward or slow for joins, grouping, or multiple files.  
-**Not when:** small CSV inspection (`pandas`) or a presentation table (host document tools).
+**Not when:** small CSV inspection (`pandas`), a presentation table (host document tools), or a loaded host analysis skill that already imported duckdb and finished the query.
 
 ## Setup
 

@@ -3,16 +3,18 @@
 追加能力の目次。ここには **what / when / path / profile** だけを置く。  
 host / skills で足りるなら何も load しない。詳細・手順・注意は該当 path へ。
 
+host の内部事実（例: `pdf` は作成専用）は書かない。ライブの skill description、欠けた binary/import、または測った残余勝ちだけを `use when` に置く。
+
 | id | use when | path | profile |
 |---|---|---|---|
 | bootstrap | CLI/Python 拡張の install が必要 | caps/bootstrap.md | — |
 | data-sql | 中〜大 CSV / 複数 file の SQL 集計（pandasが重いとき 300kで3.1x） | caps/data-sql.md | data |
-| pdf-extract | 既存 PDF の text / table 抽出（host pdfは作成用） | caps/pdf-extract.md | — |
+| pdf-extract | 既存 PDF の text / table。host description が extract を含み足りるなら使わない。巨大・レイアウト困難・fitz 明示 | caps/pdf-extract.md | — |
 | jp-encoding | SJIS/EUC 等を UTF-8 へ変換（nkf --guess、iconvはguess無し） | caps/jp-encoding.md | jp-text |
-| docs-convert | 多数 Markdown の機械的変換（1文書はhost docx/pdf） | caps/docs-convert.md | docs-extra |
-| ocr-scan | text layer のない scan / image OCR（hostに無し） | caps/ocr-scan.md | ocr |
-| media-ffmpeg | 明示された media batch conversion（hostは単発向け） | caps/media-ffmpeg.md | media |
-| keyless-open-data | host に専用 tool がない keyless public API（1 endpointで足りるとき zip 49x / JMA 147x） | caps/keyless-open-data.md | — |
+| docs-convert | 多数 Markdown の機械的変換（1文書の体裁は host document skill） | caps/docs-convert.md | docs-extra |
+| ocr-scan | text layer のない scan / image OCR。tesseract 不在、または jpn+eng が必要 | caps/ocr-scan.md | ocr |
+| media-ffmpeg | 明示された media batch conversion。host skill 表に media/ffmpeg が無いとき | caps/media-ffmpeg.md | media |
+| keyless-open-data | 専用 host tool が無い keyless 1 endpoint（zip 49x / JMA JSON 147x） | caps/keyless-open-data.md | — |
 
 ## Optional
 
@@ -32,9 +34,9 @@ host / skills で足りるなら何も load しない。詳細・手順・注意
 
 - 行が無い → **即 host / skills / 接続済み MCP**。一般 web 調査・製品比較はここに入る。
 - cap は sandbox 拡張と、host が包んでいない public API だけ。ドメイン知識の置き場ではない。
-- 用途が重なるとき: INDEX の use when が一次ソース・決定的手続き・明確な速度勝ちを書いていれば cap。それ以外は host。
+- 用途が重なるとき: ライブの host skill description が動詞を含むなら host。INDEX の use when が一次ソース・決定的手続き・測った残余勝ちを書いていれば cap。
 - 例: 日本の条文・法令番号 → `jp-law-egov`（web_search より先）。法令の解説・ニュース・判例 → host。
-- 例: 体裁の良い 1 文書を「作る」 → host の docx/pdf/xlsx/pptx。既存 PDF から抜く → `pdf-extract`。
+- 例: 体裁の良い 1 文書を「作る」 → host document skill。既存 PDF から抜く → host `pdf` の description が extract を含むなら host。巨大・レイアウト困難・fitz → `pdf-extract`。
 - 例: 小CSV/1件JSON → host Python / skills。中〜大CSVの結合・集計 → `data-sql`。
 
 補助は必要な時だけ `ENV.md` / `HARDNO.md`。測定: `bench/report.md`（2026-08-12 INDEX peek 0.03s、egov 1-2s vs web 3s、duckdb 0.12s vs pandas 0.37s）。
