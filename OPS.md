@@ -29,3 +29,4 @@
 | 2026-08-12 | smoke: curl INDEX/caps/bin; bootstrap all profiles; egov/keyless live; ENV drift (sqlite3+duckdb present); CUSTOM bootstrap curl; keyless id/path align |
 | 2026-08-12 | v3.6: CUSTOM is a host/skills-first gate (no mandatory INDEX); overlap routing in INDEX; README/OPS aligned; deploy CUSTOM to Scira in the same cycle |
 | 2026-08-14 | v3.7: live host skill table first; stop snapshotting host internals (pdf-is-create-only, host-has-no-ocr); residual use when; namespace line for caps vs skills vs delegates vs MCP |
+| 2026-08-14 | merged [PR #4](https://github.com/toyfer/daytona-capability-playbook/pull/4) to main (`f3ce118`). Scira custom-instructions paste still required |
