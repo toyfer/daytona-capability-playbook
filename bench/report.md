@@ -20,7 +20,7 @@ CLIは前後で `time.perf_counter()`、hostは実行直前に `date +%s.%N` を
 | keyless zip 100-0001 | 0.12s | find_place(失敗) 5.94s | cap 49x | host mapは課金エラーだが成功しても往復多い |
 | keyless JMA 東京 | 0.048s | get_weather 7.05s | cap 147x | hostは5日+大気汚染の濃い出力。JMA JSONだけ欲しいなら圧勝 |
 
-## 判断（初期shell/hostで足りか）
+## 判断（初期shell/hostで足りるか）
 
 初期shell: `bash curl git python3 pip3 uv node npm npx perl java tar gzip xz openssl iconv sqlite3` + GNU coreutils(grep等)
 初期Python: `pymupdf pdfplumber pdfminer pypdfium2 tabula bs4 lxml httpx requests pandas numpy scipy sklearn matplotlib seaborn plotly yfinance duckdb`
