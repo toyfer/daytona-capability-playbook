@@ -1,8 +1,8 @@
 # media-ffmpeg
 
 **What:** Batch-convert video, audio, or images with ffmpeg / ImageMagick.  
-**When:** the user explicitly requests media processing.  
-**Not when:** a light edit is easier with existing Python tooling.
+**When:** the user explicitly requests media processing and the live host skill table has no matching media/ffmpeg description, or a batch conversion needs ffmpeg / ImageMagick.  
+**Not when:** a light edit is easier with existing Python tooling, or a loaded host skill already covers the edit.
 
 ## Setup
 

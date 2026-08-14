@@ -1,8 +1,8 @@
 # keyless-open-data
 
 **What:** Query simple keyless public APIs with `curl`.  
-**When:** host lacks a dedicated tool and one public endpoint answers the task.  
-**Not when:** authentication is required, rate limits would be abused, or a host tool is better.
+**When:** one keyless public endpoint answers the task and the live host table has no dedicated tool, or a measured residual win applies (JMA JSON vs thick weather, postal code vs a failed or heavy map call).  
+**Not when:** authentication is required, rate limits would be abused, or a loaded host tool already returned the needed fields.
 
 ## Use
 

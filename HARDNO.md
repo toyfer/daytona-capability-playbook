@@ -12,3 +12,4 @@ Cross-cutting guardrails. Capability-specific limits belong in the selected cap.
 - Do not claim a command exists without `command -v` or bootstrap confirmation.
 - Do not make background MCP processes appear as new host tools.
 - Do not invent or load a capability that is not listed in `INDEX.md`; if no row matches, stay on host tools.
+- Do not snapshot host skill internals (what `pdf` can or cannot do) in CUSTOM_INSTRUCTIONS or INDEX `use when`. Point at the live description, a failed binary/import, or a measured residual.

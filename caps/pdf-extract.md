@@ -1,8 +1,8 @@
 # pdf-extract
 
 **What:** Extract text or tables from an existing PDF.  
-**When:** a PDF is in `/workspace` or supplied by the user.  
-**Not when:** creating a polished new PDF (host `pdf` skill) or text is absent (use `ocr-scan`).
+**When:** a PDF is in `/workspace` or supplied by the user, and the live host `pdf` skill cannot finish cheaply — missing libraries, a huge file, a layout-hard table, or an explicit fitz/tabula path.  
+**Not when:** creating a polished new PDF (host `pdf` skill), the loaded host skill already extracted what was needed, or text is absent (use `ocr-scan`).
 
 ## Setup
 
